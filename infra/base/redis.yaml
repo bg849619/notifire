@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  namespace: notifire
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notifire
+      component: redis
+  template:
+    metadata:
+      labels:
+        app: notifire
+        component: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 6379
+          name: redis
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+        resources:
+          limits:
+            cpu: 250m
+            memory: 256Mi
+      volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: redis-data
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

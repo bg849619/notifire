@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifire-bot
+  namespace: notifire
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notifire-bot
+  template:
+    metadata:
+      labels:
+        app: notifire-bot
+    spec:
+      containers:
+      - name: notifire-bot
+        image: gitea.k8s-b.home.bgall.dev/blake/notifire:latest
+      envFrom:
+      - secretRef:
+          name: notifire-prod-creds
+      env:
+      - name: REDIS_URL
+        value: redis://notifire-redis:6379
+  imagePullSecrets:
+  - name: gitea-puller
