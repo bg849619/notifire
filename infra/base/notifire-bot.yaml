@@ -16,6 +16,7 @@ spec:
       containers:
       - name: notifire-bot
         image: gitea.k8s-b.home.bgall.dev/blake/notifire:latest
+        imagePullPolicy: Always
         env:
         - name: REDIS_URL
           value: redis://notifire-redis:6379
