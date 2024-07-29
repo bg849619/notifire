@@ -11,5 +11,7 @@ export function start() {
         console.warn("No REDIS_URL environment variable found.");
         process.exit(1);
     }
-    client.connect(process.env.REDIS_URL);
+    client.connect({
+        url: process.env.REDIS_URL
+    });
 }
