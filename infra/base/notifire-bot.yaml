@@ -16,11 +16,11 @@ spec:
       containers:
       - name: notifire-bot
         image: gitea.k8s-b.home.bgall.dev/blake/notifire:latest
-      envFrom:
-      - secretRef:
-          name: notifire-prod-creds
-      env:
-      - name: REDIS_URL
-        value: redis://notifire-redis:6379
+        envFrom:
+        - secretRef:
+            name: notifire-prod-creds
+        env:
+        - name: REDIS_URL
+          value: redis://notifire-redis:6379
   imagePullSecrets:
   - name: gitea-puller
